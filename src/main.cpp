@@ -30,12 +30,7 @@ void set_motors()
 {
   RightDriveSmart.setVelocity(0.0, velocityUnits::pct);
   LeftDriveSmart.setVelocity(0.0, velocityUnits::pct);
-
-  RightDriveSmart.spin(directionType::fwd);
-  LeftDriveSmart.spin(directionType::rev);
-
   Intake.setVelocity(0, velocityUnits::pct);
-  Intake.spin(forward);
 }
 
 void move()
