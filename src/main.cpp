@@ -1,18 +1,19 @@
-/*----------------------------------------------------------------------------*/
-/*                                                                            */
-/*    Module:       main.cpp                                                  */
-/*    Author:       C:\Users\85547                                            */
-/*    Created:      Tue Oct 11 2022                                           */
-/*    Description:  V5 project                                                */
-/*                                                                            */
-/*----------------------------------------------------------------------------*/
-
 // ---- START VEXCODE CONFIGURED DEVICES ----
 // Robot Configuration:
 // [Name]               [Type]        [Port(s)]
 // Drivetrain           drivetrain    1, 3            
 // Controller1          controller                    
+// Intake               motor         5               
 // ---- END VEXCODE CONFIGURED DEVICES ----
+
+/*----------------------------------------------------------------------------*/
+/*                                                                            */
+/*    Module:       main.cpp                                                  */
+/*    Author:       A Team Programming                                        */
+/*    Created:      Tue Oct 11 2022                                           */
+/*    Description:  VEX Spin Up 2022                                          */
+/*                                                                            */
+/*----------------------------------------------------------------------------*/
 
 #include "vex.h"
 
@@ -21,10 +22,11 @@ using namespace vex;
 extern controller Controller1;
 extern motor RightDriveSmart;
 extern motor LeftDriveSmart;
+extern motor Intake;
 
 competition Competition = competition();
 
-void usercontrol(void)
+void set_motors()
 {
   RightDriveSmart.setVelocity(0.0, velocityUnits::pct);
   LeftDriveSmart.setVelocity(0.0, velocityUnits::pct);
@@ -32,24 +34,39 @@ void usercontrol(void)
   RightDriveSmart.spin(directionType::fwd);
   LeftDriveSmart.spin(directionType::rev);
 
+  Intake.setVelocity(0, velocityUnits::pct);
+  Intake.spin(forward);
+}
+
+void move()
+{
+  if(abs(Controller1.Axis3.position()) > 20)
+  {
+    RightDriveSmart.setVelocity(Controller1.Axis3.position() + 27, velocityUnits::pct);
+    LeftDriveSmart.setVelocity(Controller1.Axis3.position() + 27, velocityUnits::pct);
+  }
+
+  if(abs(Controller1.Axis1.position()) > 0) 
+  {
+    RightDriveSmart.setVelocity(Controller1.Axis1.position(), velocityUnits::pct);
+    LeftDriveSmart.setVelocity(Controller1.Axis1.position(), velocityUnits::pct);
+  }
+}
+
+void usercontrol(void)
+{
+  set_motors();
+
   while(true)
   {
-    if(abs(Controller1.Axis3.position()) > 20)
-    {
-      RightDriveSmart.setVelocity(Controller1.Axis3.position() + 27, velocityUnits::pct);
-      LeftDriveSmart.setVelocity(Controller1.Axis3.position() + 27, velocityUnits::pct);
-    }
+    //intake code should go here
 
-    if(abs(Controller1.Axis1.position()) > 0) 
-    {
-      RightDriveSmart.setVelocity(Controller1.Axis1.position(), velocityUnits::pct);
-      LeftDriveSmart.setVelocity(Controller1.Axis1.position(), velocityUnits::pct);
-    }
+    move();
 
     wait(20, msec);
   }
-
 }
+
 
 
 int main() {
