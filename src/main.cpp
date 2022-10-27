@@ -26,7 +26,43 @@ extern motor Intake;
 
 competition Competition = competition();
 
-void set_motors()
+void autonomous()
+{
+
+}
+
+void preAuton()
+{
+  vexcodeInit();
+}
+
+void intakeSpin(bool intakeClickState, bool intakeMotorState)
+{
+  if(Controller1.ButtonR1.pressing() && intakeClickState)
+  {
+    intakeMotorState = !intakeMotorState;
+    intakeClickState = false;
+  }
+  if(!Controller1.ButtonR1.pressing()) intakeClickState = true;
+
+  if(intakeMotorState) Intake.spin(directionType::fwd, 100, velocityUnits::pct);
+  if(!intakeMotorState) Intake.spin(directionType::fwd, 0, velocityUnits::pct);
+}
+
+void intakeRev()
+{
+  if (Intake.direction() == directionType::fwd)
+  {
+    Intake.setReversed(true);
+  }
+
+  if (Intake.direction() == directionType::rev)
+  {
+    Intake.setReversed(false);
+  }
+}
+
+void setMotors()
 {
   RightDriveSmart.setVelocity(0.0, velocityUnits::pct);
   LeftDriveSmart.setVelocity(0.0, velocityUnits::pct);
@@ -50,11 +86,17 @@ void move()
 
 void usercontrol(void)
 {
-  set_motors();
+  setMotors();
+
+  bool intakeClickState = true;
+  bool intakeMotorState = false;
 
   while(true)
   {
     //intake code should go here
+
+    intakeSpin(intakeClickState, intakeMotorState);
+    Controller1.ButtonR2.pressed(intakeRev);
 
     move();
 
@@ -65,8 +107,14 @@ void usercontrol(void)
 
 
 int main() {
-  // Initializing Robot Configuration. DO NOT REMOVE!
-  vexcodeInit();
-  
+
+  Competition.autonomous(autonomous);
   Competition.drivercontrol(usercontrol);
+
+  preAuton();
+
+  while (true)
+  {
+    wait(100, msec);
+  }
 }
