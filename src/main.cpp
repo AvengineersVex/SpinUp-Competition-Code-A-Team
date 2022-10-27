@@ -10,6 +10,13 @@
 // [Name]               [Type]        [Port(s)]
 // Drivetrain           drivetrain    1, 3            
 // Controller1          controller                    
+// Intake               motor         7               
+// ---- END VEXCODE CONFIGURED DEVICES ----
+// ---- START VEXCODE CONFIGURED DEVICES ----
+// Robot Configuration:
+// [Name]               [Type]        [Port(s)]
+// Drivetrain           drivetrain    1, 3            
+// Controller1          controller                    
 // Intake               motor         5               
 // ---- END VEXCODE CONFIGURED DEVICES ----
 
@@ -33,6 +40,9 @@ extern motor Intake;
 
 competition Competition = competition();
 
+bool checkClick = false;
+bool checkMotor = false;
+
 void autonomous()
 {
 
@@ -43,18 +53,32 @@ void preAuton()
   vexcodeInit();
 }
 
-void intakeSpin(bool intakeClickState, bool intakeMotorState)
-{
-  if(Controller1.ButtonR1.pressing() && intakeClickState)
-  {
-    intakeMotorState = !intakeMotorState;
-    intakeClickState = false;
-  }
-  if(!Controller1.ButtonR1.pressing()) intakeClickState = true;
+//-------------------------------------------------------------------------------
 
-  if(intakeMotorState) Intake.spin(directionType::fwd, 100, velocityUnits::pct);
-  if(!intakeMotorState) Intake.spin(directionType::fwd, 0, velocityUnits::pct);
+void intakeSpinFWD(){
+  
+  while (true){
+
+    if(Controller1.ButtonR1.pressing() && checkClick && checkMotor){
+      checkMotor = false;
+      checkClick = false;
+      break;
+    }
+
+    if(Controller1.ButtonR1.pressing() && !checkClick  && !checkMotor){
+      checkClick = true;
+      checkMotor = true;
+      break;
+    }
+  
+  }
+
+  if(!checkMotor) {Intake.spin(directionType::fwd, 100, velocityUnits::pct);}
+  if(checkMotor) {Intake.setVelocity(0, velocityUnits::pct);}
+  // Vansh, Akhil, Sathvik and Shaurya shed blood for this
 }
+
+//---------------------------------------------------------------------------------
 
 void intakeRev()
 {
@@ -80,14 +104,14 @@ void move()
 {
   if(abs(Controller1.Axis3.position()) > 20)
   {
-    RightDriveSmart.setVelocity(Controller1.Axis3.position() + 27, velocityUnits::pct);
-    LeftDriveSmart.setVelocity(Controller1.Axis3.position() + 27, velocityUnits::pct);
+    RightDriveSmart.spin(fwd, Controller1.Axis3.position() + 27, velocityUnits::pct);
+    LeftDriveSmart.spin(directionType::rev, Controller1.Axis3.position() + 27, velocityUnits::pct);
   }
 
   if(abs(Controller1.Axis1.position()) > 0) 
   {
-    RightDriveSmart.setVelocity(Controller1.Axis1.position(), velocityUnits::pct);
-    LeftDriveSmart.setVelocity(Controller1.Axis1.position(), velocityUnits::pct);
+    RightDriveSmart.spin(fwd, Controller1.Axis1.position(), velocityUnits::pct);
+    LeftDriveSmart.spin(directionType::rev, Controller1.Axis1.position(), velocityUnits::pct);
   }
 }
 
@@ -95,15 +119,13 @@ void usercontrol(void)
 {
   setMotors();
 
-  bool intakeClickState = true;
-  bool intakeMotorState = false;
-
+  // Controller1.ButtonR2.pressed(intakeRev);
   while(true)
   {
     //intake code should go here
 
-    intakeSpin(intakeClickState, intakeMotorState);
-    Controller1.ButtonR2.pressed(intakeRev);
+    intakeSpinFWD();
+    intakeSpinRWD();
 
     move();
 
