@@ -73,7 +73,7 @@ void intakeSpinFWD(){
   
   }
 
-  if(!checkMotor) {Intake.spin(directionType::fwd, 100, velocityUnits::pct);}
+  if(!checkMotor) {Intake.spin(directionType::rev, 100, velocityUnits::pct);}
   if(checkMotor) {Intake.setVelocity(0, velocityUnits::pct);}
   // Vansh, Akhil, Sathvik and Shaurya shed blood for this
 }
@@ -125,7 +125,6 @@ void usercontrol(void)
     //intake code should go here
 
     intakeSpinFWD();
-    intakeSpinRWD();
 
     move();
 
