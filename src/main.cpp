@@ -3,6 +3,13 @@
 // [Name]               [Type]        [Port(s)]
 // Drivetrain           drivetrain    1, 3            
 // Controller1          controller                    
+// Intake               motor         7               
+// ---- END VEXCODE CONFIGURED DEVICES ----
+// ---- START VEXCODE CONFIGURED DEVICES ----
+// Robot Configuration:
+// [Name]               [Type]        [Port(s)]
+// Drivetrain           drivetrain    1, 3            
+// Controller1          controller                    
 // Intake               motor         5               
 // ---- END VEXCODE CONFIGURED DEVICES ----
 

@@ -12,7 +12,7 @@ motor LeftDriveSmart = motor(PORT1, ratio6_1, false);
 motor RightDriveSmart = motor(PORT3, ratio6_1, true);
 drivetrain Drivetrain = drivetrain(LeftDriveSmart, RightDriveSmart, 319.19, 295, 165, mm, 1);
 controller Controller1 = controller(primary);
-motor Intake = motor(PORT5, ratio18_1, false);
+motor Intake = motor(PORT7, ratio18_1, false);
 
 // VEXcode generated functions
 // define variable for remote controller enable/disable
@@ -22,7 +22,7 @@ bool DrivetrainLNeedsToBeStopped_Controller1 = true;
 bool DrivetrainRNeedsToBeStopped_Controller1 = true;
 
 // define a task that will handle monitoring inputs from Controller1
-int rc_auto_loop_function_Controller1() {
+int rc_auto_loop_callback_Controller1() {
   // process the controller input every 20 milliseconds
   // update the motors based on the input values
   while(true) {
@@ -32,7 +32,6 @@ int rc_auto_loop_function_Controller1() {
       // right = Axis3 - Axis1
       int drivetrainLeftSideSpeed = Controller1.Axis3.position() + Controller1.Axis1.position();
       int drivetrainRightSideSpeed = Controller1.Axis3.position() - Controller1.Axis1.position();
-      
       // check if the value is inside of the deadband range
       if (drivetrainLeftSideSpeed < 5 && drivetrainLeftSideSpeed > -5) {
         // check if the left motor has already been stopped
@@ -43,7 +42,7 @@ int rc_auto_loop_function_Controller1() {
           DrivetrainLNeedsToBeStopped_Controller1 = false;
         }
       } else {
-        // reset the toggle so that the deadband code knows to stop the left motor nexttime the input is in the deadband range
+        // reset the toggle so that the deadband code knows to stop the left motor next time the input is in the deadband range
         DrivetrainLNeedsToBeStopped_Controller1 = true;
       }
       // check if the value is inside of the deadband range
@@ -59,7 +58,6 @@ int rc_auto_loop_function_Controller1() {
         // reset the toggle so that the deadband code knows to stop the right motor next time the input is in the deadband range
         DrivetrainRNeedsToBeStopped_Controller1 = true;
       }
-      
       // only tell the left drive motor to spin if the values are not in the deadband range
       if (DrivetrainLNeedsToBeStopped_Controller1) {
         LeftDriveSmart.setVelocity(drivetrainLeftSideSpeed, percent);
@@ -78,10 +76,10 @@ int rc_auto_loop_function_Controller1() {
 }
 
 /**
- * Used to initialize code/tasks/devices added using tools in VEXcode Pro.
+ * Used to initialize code/tasks/devices added using tools in VEXcode Text.
  * 
  * This should be called at the start of your int main function.
  */
 void vexcodeInit( void ) {
-  task rc_auto_loop_task_Controller1(rc_auto_loop_function_Controller1);
+  task rc_auto_loop_task_Controller1(rc_auto_loop_callback_Controller1);
 }
