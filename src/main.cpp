@@ -55,7 +55,7 @@ void preAuton()
 
 //-------------------------------------------------------------------------------
 
-void intakeSpinFWD(){
+void intakeSpinFWD(){ //rename to direction toggle or smth
   
   while (true){
 
@@ -74,24 +74,12 @@ void intakeSpinFWD(){
   }
 
   if(!checkMotor) {Intake.spin(directionType::rev, 100, velocityUnits::pct);}
-  if(checkMotor) {Intake.setVelocity(0, velocityUnits::pct);}
+  if(checkMotor) {Intake.spin(directionType::fwd, 100, velocityUnits::pct);}
   // Vansh, Akhil, Sathvik and Shaurya shed blood for this
 }
 
 //---------------------------------------------------------------------------------
 
-void intakeRev()
-{
-  if (Intake.direction() == directionType::fwd)
-  {
-    Intake.setReversed(true);
-  }
-
-  if (Intake.direction() == directionType::rev)
-  {
-    Intake.setReversed(false);
-  }
-}
 
 void setMotors()
 {
@@ -115,6 +103,10 @@ void move()
   }
 }
 
+void intakeStop() {
+  Intake.stop();
+}
+
 void usercontrol(void)
 {
   setMotors();
@@ -125,6 +117,7 @@ void usercontrol(void)
     //intake code should go here
 
     intakeSpinFWD();
+    Controller1.ButtonR2.pressed(intakeStop);
 
     move();
 
