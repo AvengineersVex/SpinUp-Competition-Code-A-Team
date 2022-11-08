@@ -17,6 +17,13 @@
 // [Name]               [Type]        [Port(s)]
 // Drivetrain           drivetrain    1, 3            
 // Controller1          controller                    
+// Intake               motor         7               
+// ---- END VEXCODE CONFIGURED DEVICES ----
+// ---- START VEXCODE CONFIGURED DEVICES ----
+// Robot Configuration:
+// [Name]               [Type]        [Port(s)]
+// Drivetrain           drivetrain    1, 3            
+// Controller1          controller                    
 // Intake               motor         5               
 // ---- END VEXCODE CONFIGURED DEVICES ----
 
@@ -92,19 +99,17 @@ void move()
 {
   if(abs(Controller1.Axis3.position()) > 20)
   {
-    RightDriveSmart.spin(fwd, Controller1.Axis3.position() + 27, velocityUnits::pct);
+    RightDriveSmart.spin(directionType::fwd, Controller1.Axis3.position() + 27, velocityUnits::pct);
     LeftDriveSmart.spin(directionType::rev, Controller1.Axis3.position() + 27, velocityUnits::pct);
   }
-
-  if(abs(Controller1.Axis1.position()) > 0) 
-  {
-    RightDriveSmart.spin(fwd, Controller1.Axis1.position(), velocityUnits::pct);
+  
+    //turn left/right
+    RightDriveSmart.spin(directionType::fwd, Controller1.Axis1.position(), velocityUnits::pct);
     LeftDriveSmart.spin(directionType::rev, Controller1.Axis1.position(), velocityUnits::pct);
-  }
 }
 
 void intakeStop() {
-  Intake.stop();
+  Intake.stop(hold);
 }
 
 void usercontrol(void)
