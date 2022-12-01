@@ -3,6 +3,12 @@
 // [Name]               [Type]        [Port(s)]
 // Drivetrain           drivetrain    7, 10           
 // Controller1          controller                    
+// ---- END VEXCODE CONFIGURED DEVICES ----
+// ---- START VEXCODE CONFIGURED DEVICES ----
+// Robot Configuration:
+// [Name]               [Type]        [Port(s)]
+// Drivetrain           drivetrain    7, 10           
+// Controller1          controller                    
 // Intake               motor         7               
 // ---- END VEXCODE CONFIGURED DEVICES ----
 // ---- START VEXCODE CONFIGURED DEVICES ----
@@ -41,8 +47,7 @@
 using namespace vex;
 
 extern controller Controller1;
-extern motor RightDriveSmart;
-extern motor LeftDriveSmart;
+extern drivetrain Drivetrain;
 extern motor Intake;
 
 competition Competition = competition();
@@ -50,70 +55,15 @@ competition Competition = competition();
 bool checkClick = false;
 bool checkMotor = false;
 
-void autonomous()
-{
-<<<<<<< HEAD
-  // RightDriveSmart.setVelocity(0.0, velocityUnits::pct);
-  // LeftDriveSmart.setVelocity(0.0, velocityUnits::pct);
-
-  while(true)
-  {
-    // if (Controller1.Axis1.position() != 0) {
-    //   Brain.Screen.print(Controller1.Axis1.position() + '\n');
-    // }
-    // if (Controller1.Axis3.position() != 0)
-    // {
-    //   LeftDriveSmart.spin(directionType::fwd, Controller1.Axis3.position(), velocityUnits::pct);
-    //   RightDriveSmart.spin(directionType::fwd, Controller1.Axis3.position(), velocityUnits::pct);
-      
-    // }
-
-    // else if (Controller1.Axis2.position() != 0 && Controller1.Axis2.position(pct) > 5)
-    // {
-    //   LeftDriveSmart.spin(directionType::fwd, Controller1.Axis2.position(), velocityUnits::pct);
-    //   RightDriveSmart.spin(directionType::fwd, Controller1.Axis2.position(), velocityUnits::pct);
-    
-      
-    // }
-
-    // // else
-    // {
-    //   LeftDriveSmart.stop(brake);
-    //   RightDriveSmart.stop(brake);
-    // }
-
-
-    if(Controller1.Axis3.position()>0)
-    {
-      Drivetrain.setDriveVelocity(Controller1.Axis3.position(), velocityUnits::pct);
-      Drivetrain.drive(forward);
-    }
-
-    else if(Controller1.Axis3.position()<0)
-    {
-      Drivetrain.setDriveVelocity(Controller1.Axis3.position(), velocityUnits::pct);
-      Drivetrain.drive(reverse);
-    }
-
-     if(Controller1.Axis1.position()>0)
-    {
-      Drivetrain.turn(leftController1.Axis3.position(), velocityUnits::pct);
-      Drivetrain.drive(forward);
-    }
-
-    wait(20, msec);
-  }
-=======
->>>>>>> e38745444087a9033a8f6af47f872622a9a1c10e
-
-}
-
 void preAuton()
 {
   vexcodeInit();
 }
 
-//-------------------------------------------------------------------------------
+void autonomous()
+{
+
+}
 
 void intakeSpinFWD(){ //rename to direction toggle or smth
   
@@ -138,27 +88,42 @@ void intakeSpinFWD(){ //rename to direction toggle or smth
   // Vansh, Akhil, Sathvik and Shaurya shed blood for this
 }
 
-//---------------------------------------------------------------------------------
-
-
 void setMotors()
 {
-  RightDriveSmart.setVelocity(0.0, velocityUnits::pct);
-  LeftDriveSmart.setVelocity(0.0, velocityUnits::pct);
+  Drivetrain.setDriveVelocity(0, velocityUnits::pct);
   Intake.setVelocity(0, velocityUnits::pct);
+
+   Drivetrain.setGearRatio(2);
 }
 
 void move()
 {
-  if(abs(Controller1.Axis3.position()) > 20)
-  {
-    RightDriveSmart.spin(directionType::fwd, Controller1.Axis3.position() + 27, velocityUnits::pct);
-    LeftDriveSmart.spin(directionType::rev, Controller1.Axis3.position() + 27, velocityUnits::pct);
-  }
+  // This is a 2 Wheel Drive
+  // if(Controller1.Axis3.position(pct) > 5)
+  // {
+  //   Drivetrain.drive(directionType::fwd, Controller1.Axis3.position(pct), velocityUnits::pct);
+  // }
+
+  // else if(Controller1.Axis3.position(pct) < -5)
+  // {
+  //   Drivetrain.drive(directionType::rev, Controller1.Axis3.position(pct), velocityUnits::pct);
+  // }
+
+  // if (Controller1.Axis1.position(pct) > 5)
+  // {
+  //   Drivetrain.turn(vex::turnType::right, Controller1.Axis1.position(pct), velocityUnits::pct);
+  // }
   
-    //turn left/right
-    RightDriveSmart.spin(directionType::fwd, Controller1.Axis1.position(), velocityUnits::pct);
-    LeftDriveSmart.spin(directionType::rev, Controller1.Axis1.position(), velocityUnits::pct);
+  // else if (Controller1.Axis1.position(pct) < -5)
+  // {
+  //   Drivetrain.turn(vex::turnType::left, Controller1.Axis1.position(pct), velocityUnits::pct);
+  // }
+
+  //2wd settings
+  //295 mm width, 165 mm wheelbase, 2:1 gear ratio
+
+  // 4WD
+
 }
 
 void intakeStop() {
