@@ -1,6 +1,24 @@
 // ---- START VEXCODE CONFIGURED DEVICES ----
 // Robot Configuration:
 // [Name]               [Type]        [Port(s)]
+// Controller1          controller                    
+// Drivetrain           drivetrain    7, 12, 18, 10   
+// Intake               motor         15              
+// ---- END VEXCODE CONFIGURED DEVICES ----
+// ---- START VEXCODE CONFIGURED DEVICES ----
+// Robot Configuration:
+// [Name]               [Type]        [Port(s)]
+// Controller1          controller                    
+// Drivetrain           drivetrain    7, 12, 18, 10   
+// ---- END VEXCODE CONFIGURED DEVICES ----
+// ---- START VEXCODE CONFIGURED DEVICES ----
+// Robot Configuration:
+// [Name]               [Type]        [Port(s)]
+// Controller1          controller                    
+// ---- END VEXCODE CONFIGURED DEVICES ----
+// ---- START VEXCODE CONFIGURED DEVICES ----
+// Robot Configuration:
+// [Name]               [Type]        [Port(s)]
 // Drivetrain           drivetrain    7, 10           
 // Controller1          controller                    
 // ---- END VEXCODE CONFIGURED DEVICES ----
@@ -99,30 +117,29 @@ void setMotors()
 void move()
 {
   // This is a 2 Wheel Drive
-  // if(Controller1.Axis3.position(pct) > 5)
-  // {
-  //   Drivetrain.drive(directionType::fwd, Controller1.Axis3.position(pct), velocityUnits::pct);
-  // }
+  if(Controller1.Axis3.position(pct) > 5)
+  {
+    Drivetrain.drive(directionType::fwd, Controller1.Axis3.position(pct), velocityUnits::pct);
+  }
 
-  // else if(Controller1.Axis3.position(pct) < -5)
-  // {
-  //   Drivetrain.drive(directionType::rev, Controller1.Axis3.position(pct), velocityUnits::pct);
-  // }
+  else if(Controller1.Axis3.position(pct) < -5)
+  {
+    Drivetrain.drive(directionType::rev, Controller1.Axis3.position(pct), velocityUnits::pct);
+  }
 
-  // if (Controller1.Axis1.position(pct) > 5)
-  // {
-  //   Drivetrain.turn(vex::turnType::right, Controller1.Axis1.position(pct), velocityUnits::pct);
-  // }
+  if (Controller1.Axis1.position(pct) > 5)
+  {
+    Drivetrain.turn(vex::turnType::right, Controller1.Axis1.position(pct), velocityUnits::pct);
+  }
   
-  // else if (Controller1.Axis1.position(pct) < -5)
-  // {
-  //   Drivetrain.turn(vex::turnType::left, Controller1.Axis1.position(pct), velocityUnits::pct);
-  // }
+  else if (Controller1.Axis1.position(pct) < -5)
+  {
+    Drivetrain.turn(vex::turnType::left, Controller1.Axis1.position(pct), velocityUnits::pct);
+  }
 
   //2wd settings
   //295 mm width, 165 mm wheelbase, 2:1 gear ratio
 
-  // 4WD
 
 }
 
