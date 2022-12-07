@@ -2,6 +2,106 @@
 // Robot Configuration:
 // [Name]               [Type]        [Port(s)]
 // Controller1          controller                    
+// Intake               motor         15              
+// leftTop              motor         7               
+// leftBot              motor         12              
+// rightTop             motor         10              
+// rightBot             motor         18              
+// ---- END VEXCODE CONFIGURED DEVICES ----
+// ---- START VEXCODE CONFIGURED DEVICES ----
+// Robot Configuration:
+// [Name]               [Type]        [Port(s)]
+// Controller1          controller                    
+// Intake               motor         15              
+// leftTop              motor         7               
+// leftBot              motor         12              
+// rightTop             motor         10              
+// rightBot             motor         18              
+// ---- END VEXCODE CONFIGURED DEVICES ----
+// ---- START VEXCODE CONFIGURED DEVICES ----
+// Robot Configuration:
+// [Name]               [Type]        [Port(s)]
+// Controller1          controller                    
+// Intake               motor         15              
+// leftTop              motor         7               
+// leftBot              motor         12              
+// rightTop             motor         10              
+// rightBot             motor         18              
+// ---- END VEXCODE CONFIGURED DEVICES ----
+// ---- START VEXCODE CONFIGURED DEVICES ----
+// Robot Configuration:
+// [Name]               [Type]        [Port(s)]
+// Controller1          controller                    
+// Intake               motor         15              
+// leftTop              motor         7               
+// leftBot              motor         12              
+// rightTop             motor         10              
+// rightBot             motor         18              
+// ---- END VEXCODE CONFIGURED DEVICES ----
+// ---- START VEXCODE CONFIGURED DEVICES ----
+// Robot Configuration:
+// [Name]               [Type]        [Port(s)]
+// Controller1          controller                    
+// Intake               motor         15              
+// leftTop              motor         7               
+// leftBot              motor         12              
+// rightTop             motor         10              
+// rightBot             motor         18              
+// ---- END VEXCODE CONFIGURED DEVICES ----
+// ---- START VEXCODE CONFIGURED DEVICES ----
+// Robot Configuration:
+// [Name]               [Type]        [Port(s)]
+// Controller1          controller                    
+// Intake               motor         15              
+// leftTop              motor         7               
+// leftBot              motor         12              
+// rightTop             motor         10              
+// rightBot             motor         18              
+// ---- END VEXCODE CONFIGURED DEVICES ----
+// ---- START VEXCODE CONFIGURED DEVICES ----
+// Robot Configuration:
+// [Name]               [Type]        [Port(s)]
+// Controller1          controller                    
+// Intake               motor         15              
+// leftTop              motor         7               
+// leftBot              motor         12              
+// rightTop             motor         10              
+// rightBot             motor         18              
+// ---- END VEXCODE CONFIGURED DEVICES ----
+// ---- START VEXCODE CONFIGURED DEVICES ----
+// Robot Configuration:
+// [Name]               [Type]        [Port(s)]
+// Controller1          controller                    
+// Intake               motor         15              
+// leftTop              motor         7               
+// leftBot              motor         12              
+// rightTop             motor         10              
+// ---- END VEXCODE CONFIGURED DEVICES ----
+// ---- START VEXCODE CONFIGURED DEVICES ----
+// Robot Configuration:
+// [Name]               [Type]        [Port(s)]
+// Controller1          controller                    
+// Intake               motor         15              
+// leftTop              motor         7               
+// leftBot              motor         12              
+// ---- END VEXCODE CONFIGURED DEVICES ----
+// ---- START VEXCODE CONFIGURED DEVICES ----
+// Robot Configuration:
+// [Name]               [Type]        [Port(s)]
+// Controller1          controller                    
+// Intake               motor         15              
+// leftTop              motor         7               
+// ---- END VEXCODE CONFIGURED DEVICES ----
+// ---- START VEXCODE CONFIGURED DEVICES ----
+// Robot Configuration:
+// [Name]               [Type]        [Port(s)]
+// Controller1          controller                    
+// Intake               motor         15              
+// ---- END VEXCODE CONFIGURED DEVICES ----
+// ---- START VEXCODE CONFIGURED DEVICES ----
+// Robot Configuration:
+// [Name]               [Type]        [Port(s)]
+// Controller1          controller                    
 // Drivetrain           drivetrain    7, 12, 18, 10   
 // Intake               motor         15              
 // ---- END VEXCODE CONFIGURED DEVICES ----
@@ -65,7 +165,12 @@
 using namespace vex;
 
 extern controller Controller1;
-extern drivetrain Drivetrain;
+
+extern motor leftTop;
+extern motor leftBot;
+extern motor rightTop;
+extern motor rightBot;
+
 extern motor Intake;
 
 competition Competition = competition();
@@ -108,39 +213,47 @@ void intakeSpinFWD(){ //rename to direction toggle or smth
 
 void setMotors()
 {
-  Drivetrain.setDriveVelocity(0, velocityUnits::pct);
   Intake.setVelocity(0, velocityUnits::pct);
-
-   Drivetrain.setGearRatio(2);
 }
 
 void move()
 {
-  // This is a 2 Wheel Drive
-  if(Controller1.Axis3.position(pct) > 5)
-  {
-    Drivetrain.drive(directionType::fwd, Controller1.Axis3.position(pct), velocityUnits::pct);
-  }
-
-  else if(Controller1.Axis3.position(pct) < -5)
-  {
-    Drivetrain.drive(directionType::rev, Controller1.Axis3.position(pct), velocityUnits::pct);
-  }
-
-  if (Controller1.Axis1.position(pct) > 5)
-  {
-    Drivetrain.turn(vex::turnType::right, Controller1.Axis1.position(pct), velocityUnits::pct);
-  }
-  
-  else if (Controller1.Axis1.position(pct) < -5)
-  {
-    Drivetrain.turn(vex::turnType::left, Controller1.Axis1.position(pct), velocityUnits::pct);
-  }
-
   //2wd settings
   //295 mm width, 165 mm wheelbase, 2:1 gear ratio
+  // //front to back 1.25 wheel size ratio
 
+  if (Controller1.Axis3.position(pct) > 15)
+  {
+    leftTop.spin(forward, Controller1.Axis3.position(), velocityUnits::pct);
+    // leftBot.spin(forward, Controller1.Axis3.position() * 0.8, velocityUnits::pct);
+    rightTop.spin(forward, -Controller1.Axis3.position(), velocityUnits::pct);
+    // rightBot.spin(forward, Controller1.Axis3.position() * 0.8, velocityUnits::pct);
+  } 
 
+  else if (Controller1.Axis3.position(pct) < -15) {
+    leftTop.spin(forward, -Controller1.Axis3.position(), velocityUnits::pct);
+    // leftBot.spin(reverse, Controller1.Axis3.position() * 0.8, velocityUnits::pct);
+    rightTop.spin(forward, Controller1.Axis3.position(), velocityUnits::pct);
+    // rightBot.spin(reverse, Controller1.Axis3.position() * 0.8, velocityUnits::pct);
+  }
+
+  if (Controller1.Axis1.position(pct) < -15)
+  {
+    leftTop.spin(forward, Controller1.Axis1.position(), velocityUnits::pct);
+    // leftBot.spin(forward, Controller1.Axis1.position() * 0.8, velocityUnits::pct);
+    rightTop.spin(reverse, Controller1.Axis1.position(), velocityUnits::pct);
+    // rightBot.spin(reverse, Controller1.Axis1.position() * 0.8, velocityUnits::pct);
+  }
+
+  else if (Controller1.Axis1.position(pct) > 15)
+  {
+    leftTop.spin(reverse, Controller1.Axis1.position(), velocityUnits::pct);
+    // leftBot.spin(reverse, Controller1.Axis1.position() * 0.8, velocityUnits::pct);
+    rightTop.spin(forward, Controller1.Axis1.position(), velocityUnits::pct);
+    // rightBot.spin(forward, Controller1.Axis1.position() * 0.8, velocityUnits::pct);
+  }
+
+  // leftTop.spin(forward, Controller1.Axis2.position(), pct);
 }
 
 void intakeStop() {
@@ -156,10 +269,10 @@ void usercontrol(void)
   {
     //intake code should go here
 
-    intakeSpinFWD();
-    Controller1.ButtonR2.pressed(intakeStop);
-
     move();
+
+    // intakeSpinFWD();
+    Controller1.ButtonR2.pressed(intakeStop);
 
     wait(20, msec);
   }
