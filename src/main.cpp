@@ -175,8 +175,8 @@ extern motor Intake;
 
 competition Competition = competition();
 
-bool checkClick = false;
-bool checkMotor = false;
+bool isMotorSpinning = false;
+bool isClockwise = false;
 
 void preAuton()
 {
@@ -188,76 +188,83 @@ void autonomous()
 
 }
 
-void intakeSpinFWD(){ //rename to direction toggle or smth
+// void intakeSpinFWD(){ //rename to direction toggle or smth
   
-  while (true){
+//   // while (true){
 
-    if(Controller1.ButtonR1.pressing() && checkClick && checkMotor){
-      checkMotor = false;
-      checkClick = false;
-      break;
-    }
+//   //   if(Controller1.ButtonR1.pressing() && checkClick && checkMotor){
+//   //     checkMotor = false;
+//   //     checkClick = false;
+//   //     break;
+//   //   }
 
-    if(Controller1.ButtonR1.pressing() && !checkClick  && !checkMotor){
-      checkClick = true;
-      checkMotor = true;
-      break;
-    }
+//   //   if(Controller1.ButtonR1.pressing() && !checkClick  && !checkMotor){
+//   //     checkClick = true;
+//   //     checkMotor = true;
+//   //     break;
+//   //   }
   
-  }
+//   // }
 
-  if(!checkMotor) {Intake.spin(directionType::rev, 100, velocityUnits::pct);}
-  if(checkMotor) {Intake.spin(directionType::fwd, 100, velocityUnits::pct);}
-  // Vansh, Akhil, Sathvik and Shaurya shed blood for this
-}
+//   // if(!checkMotor) {Intake.spin(directionType::rev, 100, velocityUnits::pct);}
+//   // if(checkMotor) {Intake.spin(directionType::fwd, 100, velocityUnits::pct);}
+//   // // Vansh, Akhil, Sathvik and Shaurya shed blood for this
+
+
+
+
+// }
 
 void setMotors()
 {
   Intake.setVelocity(0, velocityUnits::pct);
+
+  leftTop.setStopping(hold);
+  leftBot.setStopping(hold);
+  rightTop.setStopping(hold);
+  rightBot.setStopping(hold);
 }
 
 void move()
 {
-  //2wd settings
-  //295 mm width, 165 mm wheelbase, 2:1 gear ratio
-  // //front to back 1.25 wheel size ratio
+  leftTop.spin(forward, Controller1.Axis3.position(pct), percent);
+  leftBot.spin(forward, Controller1.Axis3.position(pct), percent);
+  rightTop.spin(forward, Controller1.Axis3.position(pct), percent);
+  rightBot.spin(forward, Controller1.Axis3.position(pct), percent);
 
-  if (Controller1.Axis3.position(pct) > 15)
+  if (abs(Controller1.Axis1.position()) > 0)
   {
-    leftTop.spin(forward, Controller1.Axis3.position(), velocityUnits::pct);
-    // leftBot.spin(forward, Controller1.Axis3.position() * 0.8, velocityUnits::pct);
-    rightTop.spin(forward, -Controller1.Axis3.position(), velocityUnits::pct);
-    // rightBot.spin(forward, Controller1.Axis3.position() * 0.8, velocityUnits::pct);
-  } 
-
-  else if (Controller1.Axis3.position(pct) < -15) {
-    leftTop.spin(forward, -Controller1.Axis3.position(), velocityUnits::pct);
-    // leftBot.spin(reverse, Controller1.Axis3.position() * 0.8, velocityUnits::pct);
-    rightTop.spin(forward, Controller1.Axis3.position(), velocityUnits::pct);
-    // rightBot.spin(reverse, Controller1.Axis3.position() * 0.8, velocityUnits::pct);
+    leftTop.spin(forward, Controller1.Axis1.position(pct), percent);
+    leftBot.spin(forward, Controller1.Axis1.position(pct), percent);
+    rightTop.spin(forward, -Controller1.Axis1.position(pct), percent);
+    rightBot.spin(forward, -Controller1.Axis1.position(pct), percent);
   }
 
-  if (Controller1.Axis1.position(pct) < -15)
-  {
-    leftTop.spin(forward, Controller1.Axis1.position(), velocityUnits::pct);
-    // leftBot.spin(forward, Controller1.Axis1.position() * 0.8, velocityUnits::pct);
-    rightTop.spin(reverse, Controller1.Axis1.position(), velocityUnits::pct);
-    // rightBot.spin(reverse, Controller1.Axis1.position() * 0.8, velocityUnits::pct);
-  }
-
-  else if (Controller1.Axis1.position(pct) > 15)
-  {
-    leftTop.spin(reverse, Controller1.Axis1.position(), velocityUnits::pct);
-    // leftBot.spin(reverse, Controller1.Axis1.position() * 0.8, velocityUnits::pct);
-    rightTop.spin(forward, Controller1.Axis1.position(), velocityUnits::pct);
-    // rightBot.spin(forward, Controller1.Axis1.position() * 0.8, velocityUnits::pct);
-  }
-
-  // leftTop.spin(forward, Controller1.Axis2.position(), pct);
 }
 
 void intakeStop() {
+  isMotorSpinning = false; // motor is not spinning
   Intake.stop(hold);
+}
+
+void intakeStart() {
+  isMotorSpinning = true; // motor is Spinning
+
+  Intake.spin(forward, 100, velocityUnits::pct);
+}
+
+void intakeReverse()
+{
+  if (isClockwise)
+  {
+    Intake.setReversed(false);
+    isClockwise = false;
+  }
+  else
+  {
+    Intake.setReversed(true);
+    isClockwise = true;
+  }
 }
 
 void usercontrol(void)
@@ -271,14 +278,13 @@ void usercontrol(void)
 
     move();
 
-    // intakeSpinFWD();
+    Controller1.ButtonR1.pressed(intakeStart);
+    Controller1.ButtonA.pressed(intakeReverse);
     Controller1.ButtonR2.pressed(intakeStop);
-
+   
     wait(20, msec);
   }
 }
-
-
 
 int main() {
 
