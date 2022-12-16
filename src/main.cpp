@@ -218,6 +218,8 @@ void autonomous()
 void setMotors()
 {
   Intake.setVelocity(0, velocityUnits::pct);
+  rightBot.setReversed(true);
+  
 
   leftTop.setStopping(hold);
   leftBot.setStopping(hold);
@@ -228,43 +230,39 @@ void setMotors()
 void move()
 {
   leftTop.spin(forward, Controller1.Axis3.position(pct), percent);
-  leftBot.spin(forward, Controller1.Axis3.position(pct), percent);
+  leftBot.spin(forward, Controller1.Axis3.position(pct) * 0.8, percent);
   rightTop.spin(forward, Controller1.Axis3.position(pct), percent);
-  rightBot.spin(forward, Controller1.Axis3.position(pct), percent);
+  rightBot.spin(forward, Controller1.Axis3.position(pct) * 0.8, percent);
 
-  if (abs(Controller1.Axis1.position()) > 0)
+  if (Controller1.Axis1.position() > 0)
   {
     leftTop.spin(forward, Controller1.Axis1.position(pct), percent);
-    leftBot.spin(forward, Controller1.Axis1.position(pct), percent);
+    leftBot.spin(forward, Controller1.Axis1.position(pct) * 0.8 , percent);
     rightTop.spin(forward, -Controller1.Axis1.position(pct), percent);
-    rightBot.spin(forward, -Controller1.Axis1.position(pct), percent);
+    rightBot.spin(forward, -Controller1.Axis1.position(pct) * 0.8, percent);
   }
-
+  else if (Controller1.Axis1.position() < 0)
+  {
+    leftTop.spin(forward, -Controller1.Axis1.position(pct), percent);
+    leftBot.spin(forward, -Controller1.Axis1.position(pct) * 0.8 , percent);
+    rightTop.spin(forward, Controller1.Axis1.position(pct), percent);
+    rightBot.spin(forward, Controller1.Axis1.position(pct) * 0.8, percent);
+  }
 }
 
-void intakeStop() {
-  isMotorSpinning = false; // motor is not spinning
+void intakeStop() 
+{
   Intake.stop(hold);
 }
 
-void intakeStart() {
-  isMotorSpinning = true; // motor is Spinning
-
+void intakeStart() 
+{
   Intake.spin(forward, 100, velocityUnits::pct);
 }
 
 void intakeReverse()
 {
-  if (isClockwise)
-  {
-    Intake.setReversed(false);
-    isClockwise = false;
-  }
-  else
-  {
-    Intake.setReversed(true);
-    isClockwise = true;
-  }
+  Intake.spin(forward, -100, velocityUnits::pct);
 }
 
 void usercontrol(void)
@@ -278,9 +276,10 @@ void usercontrol(void)
 
     move();
 
-    Controller1.ButtonR1.pressed(intakeStart);
-    Controller1.ButtonA.pressed(intakeReverse);
-    Controller1.ButtonR2.pressed(intakeStop);
+    Controller1.ButtonX.pressed(intakeStart);
+    Controller1.ButtonB.pressed(intakeReverse);
+    Controller1.ButtonY.pressed(intakeStop);
+    Controller1.ButtonA.pressed(intakeStop);
    
     wait(20, msec);
   }
