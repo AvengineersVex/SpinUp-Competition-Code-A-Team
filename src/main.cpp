@@ -217,9 +217,7 @@ void autonomous()
 
 void setMotors()
 {
-  Intake.setVelocity(0, velocityUnits::pct);
-  rightBot.setReversed(true);
-  
+  Intake.setVelocity(0, velocityUnits::pct);  
 
   leftTop.setStopping(hold);
   leftBot.setStopping(hold);
@@ -231,20 +229,20 @@ void move()
 {
   leftTop.spin(forward, Controller1.Axis3.position(pct), percent);
   leftBot.spin(forward, Controller1.Axis3.position(pct) * 0.8, percent);
-  rightTop.spin(forward, Controller1.Axis3.position(pct), percent);
-  rightBot.spin(forward, Controller1.Axis3.position(pct) * 0.8, percent);
+  rightTop.spin(reverse, Controller1.Axis3.position(pct), percent);
+  rightBot.spin(reverse, Controller1.Axis3.position(pct) * 0.8, percent);
 
   if (Controller1.Axis1.position() > 0)
   {
     leftTop.spin(forward, Controller1.Axis1.position(pct), percent);
     leftBot.spin(forward, Controller1.Axis1.position(pct) * 0.8 , percent);
-    rightTop.spin(forward, -Controller1.Axis1.position(pct), percent);
-    rightBot.spin(forward, -Controller1.Axis1.position(pct) * 0.8, percent);
+    rightTop.spin(forward, Controller1.Axis1.position(pct), percent);
+    rightBot.spin(forward, Controller1.Axis1.position(pct) * 0.8, percent);
   }
   else if (Controller1.Axis1.position() < 0)
   {
-    leftTop.spin(forward, -Controller1.Axis1.position(pct), percent);
-    leftBot.spin(forward, -Controller1.Axis1.position(pct) * 0.8 , percent);
+    leftTop.spin(forward, Controller1.Axis1.position(pct), percent);
+    leftBot.spin(forward, Controller1.Axis1.position(pct) * 0.8 , percent);
     rightTop.spin(forward, Controller1.Axis1.position(pct), percent);
     rightBot.spin(forward, Controller1.Axis1.position(pct) * 0.8, percent);
   }
