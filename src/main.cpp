@@ -1,165 +1,3 @@
-// ---- START VEXCODE CONFIGURED DEVICES ----
-// Robot Configuration:
-// [Name]               [Type]        [Port(s)]
-// Controller1          controller                    
-// Intake               motor         15              
-// leftTop              motor         7               
-// leftBot              motor         12              
-// rightTop             motor         10              
-// rightBot             motor         18              
-// ---- END VEXCODE CONFIGURED DEVICES ----
-// ---- START VEXCODE CONFIGURED DEVICES ----
-// Robot Configuration:
-// [Name]               [Type]        [Port(s)]
-// Controller1          controller                    
-// Intake               motor         15              
-// leftTop              motor         7               
-// leftBot              motor         12              
-// rightTop             motor         10              
-// rightBot             motor         18              
-// ---- END VEXCODE CONFIGURED DEVICES ----
-// ---- START VEXCODE CONFIGURED DEVICES ----
-// Robot Configuration:
-// [Name]               [Type]        [Port(s)]
-// Controller1          controller                    
-// Intake               motor         15              
-// leftTop              motor         7               
-// leftBot              motor         12              
-// rightTop             motor         10              
-// rightBot             motor         18              
-// ---- END VEXCODE CONFIGURED DEVICES ----
-// ---- START VEXCODE CONFIGURED DEVICES ----
-// Robot Configuration:
-// [Name]               [Type]        [Port(s)]
-// Controller1          controller                    
-// Intake               motor         15              
-// leftTop              motor         7               
-// leftBot              motor         12              
-// rightTop             motor         10              
-// rightBot             motor         18              
-// ---- END VEXCODE CONFIGURED DEVICES ----
-// ---- START VEXCODE CONFIGURED DEVICES ----
-// Robot Configuration:
-// [Name]               [Type]        [Port(s)]
-// Controller1          controller                    
-// Intake               motor         15              
-// leftTop              motor         7               
-// leftBot              motor         12              
-// rightTop             motor         10              
-// rightBot             motor         18              
-// ---- END VEXCODE CONFIGURED DEVICES ----
-// ---- START VEXCODE CONFIGURED DEVICES ----
-// Robot Configuration:
-// [Name]               [Type]        [Port(s)]
-// Controller1          controller                    
-// Intake               motor         15              
-// leftTop              motor         7               
-// leftBot              motor         12              
-// rightTop             motor         10              
-// rightBot             motor         18              
-// ---- END VEXCODE CONFIGURED DEVICES ----
-// ---- START VEXCODE CONFIGURED DEVICES ----
-// Robot Configuration:
-// [Name]               [Type]        [Port(s)]
-// Controller1          controller                    
-// Intake               motor         15              
-// leftTop              motor         7               
-// leftBot              motor         12              
-// rightTop             motor         10              
-// rightBot             motor         18              
-// ---- END VEXCODE CONFIGURED DEVICES ----
-// ---- START VEXCODE CONFIGURED DEVICES ----
-// Robot Configuration:
-// [Name]               [Type]        [Port(s)]
-// Controller1          controller                    
-// Intake               motor         15              
-// leftTop              motor         7               
-// leftBot              motor         12              
-// rightTop             motor         10              
-// ---- END VEXCODE CONFIGURED DEVICES ----
-// ---- START VEXCODE CONFIGURED DEVICES ----
-// Robot Configuration:
-// [Name]               [Type]        [Port(s)]
-// Controller1          controller                    
-// Intake               motor         15              
-// leftTop              motor         7               
-// leftBot              motor         12              
-// ---- END VEXCODE CONFIGURED DEVICES ----
-// ---- START VEXCODE CONFIGURED DEVICES ----
-// Robot Configuration:
-// [Name]               [Type]        [Port(s)]
-// Controller1          controller                    
-// Intake               motor         15              
-// leftTop              motor         7               
-// ---- END VEXCODE CONFIGURED DEVICES ----
-// ---- START VEXCODE CONFIGURED DEVICES ----
-// Robot Configuration:
-// [Name]               [Type]        [Port(s)]
-// Controller1          controller                    
-// Intake               motor         15              
-// ---- END VEXCODE CONFIGURED DEVICES ----
-// ---- START VEXCODE CONFIGURED DEVICES ----
-// Robot Configuration:
-// [Name]               [Type]        [Port(s)]
-// Controller1          controller                    
-// Drivetrain           drivetrain    7, 12, 18, 10   
-// Intake               motor         15              
-// ---- END VEXCODE CONFIGURED DEVICES ----
-// ---- START VEXCODE CONFIGURED DEVICES ----
-// Robot Configuration:
-// [Name]               [Type]        [Port(s)]
-// Controller1          controller                    
-// Drivetrain           drivetrain    7, 12, 18, 10   
-// ---- END VEXCODE CONFIGURED DEVICES ----
-// ---- START VEXCODE CONFIGURED DEVICES ----
-// Robot Configuration:
-// [Name]               [Type]        [Port(s)]
-// Controller1          controller                    
-// ---- END VEXCODE CONFIGURED DEVICES ----
-// ---- START VEXCODE CONFIGURED DEVICES ----
-// Robot Configuration:
-// [Name]               [Type]        [Port(s)]
-// Drivetrain           drivetrain    7, 10           
-// Controller1          controller                    
-// ---- END VEXCODE CONFIGURED DEVICES ----
-// ---- START VEXCODE CONFIGURED DEVICES ----
-// Robot Configuration:
-// [Name]               [Type]        [Port(s)]
-// Drivetrain           drivetrain    7, 10           
-// Controller1          controller                    
-// Intake               motor         7               
-// ---- END VEXCODE CONFIGURED DEVICES ----
-// ---- START VEXCODE CONFIGURED DEVICES ----
-// Robot Configuration:
-// [Name]               [Type]        [Port(s)]
-// Drivetrain           drivetrain    1, 3            
-// Controller1          controller                    
-// Intake               motor         7               
-// ---- END VEXCODE CONFIGURED DEVICES ----
-// ---- START VEXCODE CONFIGURED DEVICES ----
-// Robot Configuration:
-// [Name]               [Type]        [Port(s)]
-// Drivetrain           drivetrain    1, 3            
-// Controller1          controller                    
-// Intake               motor         7               
-// ---- END VEXCODE CONFIGURED DEVICES ----
-// ---- START VEXCODE CONFIGURED DEVICES ----
-// Robot Configuration:
-// [Name]               [Type]        [Port(s)]
-// Drivetrain           drivetrain    1, 3            
-// Controller1          controller                    
-// Intake               motor         5               
-// ---- END VEXCODE CONFIGURED DEVICES ----
-
-/*----------------------------------------------------------------------------*/
-/*                                                                            */
-/*    Module:       main.cpp                                                  */
-/*    Author:       A Team Programming                                        */
-/*    Created:      Tue Oct 11 2022                                           */
-/*    Description:  VEX Spin Up 2022                                          */
-/*                                                                            */
-/*----------------------------------------------------------------------------*/
-
 #include "vex.h"
 #include <string>
 using namespace vex;
@@ -228,23 +66,23 @@ void setMotors()
 void move()
 {
   leftTop.spin(forward, Controller1.Axis3.position(pct), percent);
-  leftBot.spin(forward, Controller1.Axis3.position(pct) * 0.8, percent);
+  leftBot.spin(forward, Controller1.Axis3.position(pct), percent);
   rightTop.spin(reverse, Controller1.Axis3.position(pct), percent);
-  rightBot.spin(reverse, Controller1.Axis3.position(pct) * 0.8, percent);
+  rightBot.spin(reverse, Controller1.Axis3.position(pct), percent);
 
   if (Controller1.Axis1.position() > 0)
   {
     leftTop.spin(forward, Controller1.Axis1.position(pct), percent);
-    leftBot.spin(forward, Controller1.Axis1.position(pct) * 0.8 , percent);
+    leftBot.spin(forward, Controller1.Axis1.position(pct), percent);
     rightTop.spin(forward, Controller1.Axis1.position(pct), percent);
-    rightBot.spin(forward, Controller1.Axis1.position(pct) * 0.8, percent);
+    rightBot.spin(forward, Controller1.Axis1.position(pct), percent);
   }
   else if (Controller1.Axis1.position() < 0)
   {
     leftTop.spin(forward, Controller1.Axis1.position(pct), percent);
-    leftBot.spin(forward, Controller1.Axis1.position(pct) * 0.8 , percent);
+    leftBot.spin(forward, Controller1.Axis1.position(pct), percent);
     rightTop.spin(forward, Controller1.Axis1.position(pct), percent);
-    rightBot.spin(forward, Controller1.Axis1.position(pct) * 0.8, percent);
+    rightBot.spin(forward, Controller1.Axis1.position(pct), percent);
   }
 }
 
