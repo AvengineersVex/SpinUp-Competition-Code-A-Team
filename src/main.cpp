@@ -1,4 +1,16 @@
 #include "vex.h"
+
+// ---- START VEXCODE CONFIGURED DEVICES ----
+// Robot Configuration:
+// [Name]               [Type]        [Port(s)]
+// Controller1          controller                    
+// Intake               motor         15              
+// Piston               led           A               
+// leftTop              motor         7               
+// leftBot              motor         12              
+// rightTop             motor         10              
+// rightBot             motor         18              
+// ---- END VEXCODE CONFIGURED DEVICES ----
 #include <string>
 using namespace vex;
 
@@ -8,6 +20,8 @@ extern motor leftTop;
 extern motor leftBot;
 extern motor rightTop;
 extern motor rightBot;
+
+// extern drivetrain Drivetrain;
 
 extern motor Intake;
 
@@ -24,6 +38,12 @@ void preAuton()
 void autonomous()
 {
 
+}
+
+void test()
+{
+  // Drivetrain.driveFor(forward, 12, inches);
+  // Drivetrain.turnFor(right, 90, degrees);
 }
 
 // void intakeSpinFWD(){ //rename to direction toggle or smth
@@ -57,6 +77,7 @@ void setMotors()
 {
   Intake.setVelocity(0, velocityUnits::pct);  
 
+  // Drivetrain.setStopping(hold);
   leftTop.setStopping(hold);
   leftBot.setStopping(hold);
   rightTop.setStopping(hold);
@@ -65,6 +86,28 @@ void setMotors()
 
 void move()
 {
+  
+  //  if(Controller1.Axis3.position(pct) > 5)
+  // {
+  //   Drivetrain.drive(directionType::fwd, Controller1.Axis3.position(pct), velocityUnits::pct);
+  // }
+
+  // else if(Controller1.Axis3.position(pct) < -5)
+  // {
+  //   Drivetrain.drive(directionType::rev, Controller1.Axis3.position(pct), velocityUnits::pct);
+  // }
+
+  // if (Controller1.Axis1.position(pct) > 5)
+  // {
+  //   Drivetrain.turn(right, Controller1.Axis1.position(pct), velocityUnits::pct);
+  // }
+
+  // else if (Controller1.Axis1.position(pct) < -5)
+  // {
+  //   Drivetrain.turn(left, Controller1.Axis1.position(pct), velocityUnits::pct);
+  // }
+
+
   leftTop.spin(forward, Controller1.Axis3.position(pct), percent);
   leftBot.spin(forward, Controller1.Axis3.position(pct), percent);
   rightTop.spin(reverse, Controller1.Axis3.position(pct), percent);
@@ -91,7 +134,7 @@ void intakeStop()
   Intake.stop(hold);
 }
 
-void intakeStart() 
+void intakeForward() 
 {
   Intake.spin(forward, 100, velocityUnits::pct);
 }
@@ -99,6 +142,23 @@ void intakeStart()
 void intakeReverse()
 {
   Intake.spin(forward, -100, velocityUnits::pct);
+}
+
+int pneumatic()
+{
+  return 0;
+}
+
+void push()
+{
+  Brain.Screen.print("Pushed button UP");
+  Piston.set(true);
+}
+
+void retract()
+{
+  Brain.Screen.print("Pushed button DOWN");
+  Piston.set(false);
 }
 
 void usercontrol(void)
@@ -112,11 +172,18 @@ void usercontrol(void)
 
     move();
 
-    Controller1.ButtonX.pressed(intakeStart);
     Controller1.ButtonB.pressed(intakeReverse);
     Controller1.ButtonY.pressed(intakeStop);
     Controller1.ButtonA.pressed(intakeStop);
-   
+    Controller1.ButtonX.pressed(intakeForward);
+       
+    Controller1.ButtonUp.pressed(push);
+    Controller1.ButtonDown.pressed(retract);
+    Controller1.ButtonLeft.pressed(test);
+
+    wait(15, msec);
+    pneumatic();
+
     wait(20, msec);
   }
 }

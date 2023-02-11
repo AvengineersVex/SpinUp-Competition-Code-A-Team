@@ -10,17 +10,18 @@ brain  Brain;
 // VEXcode device constructors
 controller Controller1 = controller(primary);
 motor Intake = motor(PORT15, ratio18_1, false);
-motor leftTop = motor(PORT7, ratio6_1, false);
-motor leftBot = motor(PORT12, ratio6_1, false);
-motor rightTop = motor(PORT10, ratio6_1, false);
-motor rightBot = motor(PORT18, ratio6_1, false);
+led Piston = led(Brain.ThreeWirePort.A);
+motor leftTop = motor(PORT7, ratio18_1, false);
+motor leftBot = motor(PORT12, ratio18_1, false);
+motor rightTop = motor(PORT10, ratio18_1, false);
+motor rightBot = motor(PORT18, ratio18_1, false);
 
 // VEXcode generated functions
 // define variable for remote controller enable/disable
 bool RemoteControlCodeEnabled = true;
 
 /**
- * Used to initialize code/tasks/devices added using tools in VEXcode Text.
+ * Used to initialize code/tasks/devices added using tools in VEXcode Pro.
  * 
  * This should be called at the start of your int main function.
  */
