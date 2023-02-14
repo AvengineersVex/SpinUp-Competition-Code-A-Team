@@ -92,7 +92,7 @@ void preAuton()
 
 void autonomous()
 {
-
+  Roller.spinFor(reverse,50,degrees);
 }
 
 void setMotors()
@@ -104,6 +104,7 @@ void setMotors()
   leftBot.setStopping(brake);
   rightTop.setStopping(brake);
   rightBot.setStopping(brake);
+  Roller.setStopping(hold);
 
   catapult.setStopping(hold);
 }
@@ -111,24 +112,24 @@ void setMotors()
 void move()
 {
 
-  leftTop.spin(forward, Controller1.Axis3.position(pct)/2, percent);
-  leftBot.spin(forward, Controller1.Axis3.position(pct)/2, percent);
-  rightTop.spin(reverse, Controller1.Axis3.position(pct)/2, percent);
-  rightBot.spin(reverse, Controller1.Axis3.position(pct)/2, percent);
+  leftTop.spin(forward, Controller1.Axis3.position(pct), percent);
+  leftBot.spin(forward, Controller1.Axis3.position(pct), percent);
+  rightTop.spin(reverse, Controller1.Axis3.position(pct), percent);
+  rightBot.spin(reverse, Controller1.Axis3.position(pct), percent);
 
   if (Controller1.Axis1.position() > 0)
   {
-    leftTop.spin(forward, Controller1.Axis1.position(pct)/2, percent);
-    leftBot.spin(forward, Controller1.Axis1.position(pct)/2, percent);
-    rightTop.spin(forward, Controller1.Axis1.position(pct)/2, percent);
-    rightBot.spin(forward, Controller1.Axis1.position(pct)/2, percent);
+    leftTop.spin(forward, Controller1.Axis1.position(pct), percent);
+    leftBot.spin(forward, Controller1.Axis1.position(pct), percent);
+    rightTop.spin(forward, Controller1.Axis1.position(pct), percent);
+    rightBot.spin(forward, Controller1.Axis1.position(pct), percent);
   }
   else if (Controller1.Axis1.position() < 0)
   {
-    leftTop.spin(forward, Controller1.Axis1.position(pct)/2, percent);
-    leftBot.spin(forward, Controller1.Axis1.position(pct)/2, percent);
-    rightTop.spin(forward, Controller1.Axis1.position(pct)/2, percent);
-    rightBot.spin(forward, Controller1.Axis1.position(pct)/2, percent);
+    leftTop.spin(forward, Controller1.Axis1.position(pct), percent);
+    leftBot.spin(forward, Controller1.Axis1.position(pct), percent);
+    rightTop.spin(forward, Controller1.Axis1.position(pct), percent);
+    rightBot.spin(forward, Controller1.Axis1.position(pct), percent);
   }
 }
 
@@ -202,14 +203,16 @@ void usercontrol(void)
     Controller1.ButtonA.pressed(intakeStop);
     Controller1.ButtonX.pressed(intakeForward);
        
-    Controller1.ButtonUp.pressed(push);
-    Controller1.ButtonDown.pressed(retract);
+    Controller1.ButtonR2.pressed(push);
+    Controller1.ButtonR1.pressed(retract);
 
     Controller1.ButtonLeft.pressed(rollerOn);
     Controller1.ButtonRight.pressed(rollerOff);
 
     Controller1.ButtonL2.pressed(catapultOff);
     Controller1.ButtonL1.pressed(catapultOn);
+
+    Controller1.ButtonUp.pressed(autonomous);
 
     wait(15, msec);
     pneumatic();
