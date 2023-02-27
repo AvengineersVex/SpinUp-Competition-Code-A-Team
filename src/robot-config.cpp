@@ -15,9 +15,10 @@ motor leftTop = motor(PORT7, ratio18_1, false);
 motor leftBot = motor(PORT12, ratio18_1, false);
 motor rightTop = motor(PORT10, ratio18_1, false);
 motor rightBot = motor(PORT18, ratio18_1, false);
-led PistonR = led(Brain.ThreeWirePort.B);
-motor catapult = motor(PORT9, ratio36_1, false);
+led PistonR = led(Brain.ThreeWirePort.H);
+motor flywheel = motor(PORT3, ratio6_1, false);
 motor Roller = motor(PORT8, ratio18_1, false);
+motor Indexer = motor(PORT14, ratio18_1, false);
 
 // VEXcode generated functions
 // define variable for remote controller enable/disable

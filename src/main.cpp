@@ -8,65 +8,10 @@
 // leftBot              motor         12              
 // rightTop             motor         10              
 // rightBot             motor         18              
-// PistonR              led           B               
-// catapult             motor         9               
+// PistonR              led           H               
+// flywheel             motor         3               
 // Roller               motor         8               
-// ---- END VEXCODE CONFIGURED DEVICES ----
-// ---- START VEXCODE CONFIGURED DEVICES ----
-// Robot Configuration:
-// [Name]               [Type]        [Port(s)]
-// Controller1          controller                    
-// Intake               motor         15              
-// PistonL              led           A               
-// leftTop              motor         7               
-// leftBot              motor         12              
-// rightTop             motor         10              
-// rightBot             motor         18              
-// PistonR              led           B               
-// catapultLeft         motor         9               
-// Roller               motor         8               
-// ---- END VEXCODE CONFIGURED DEVICES ----
-// ---- START VEXCODE CONFIGURED DEVICES ----
-// Robot Configuration:
-// [Name]               [Type]        [Port(s)]
-// Controller1          controller                    
-// Intake               motor         15              
-// PistonL              led           A               
-// leftTop              motor         7               
-// leftBot              motor         12              
-// rightTop             motor         10              
-// rightBot             motor         18              
-// PistonR              led           B               
-// catapultRight        motor         9               
-// Roller               motor         8               
-// ---- END VEXCODE CONFIGURED DEVICES ----
-// ---- START VEXCODE CONFIGURED DEVICES ----
-// Robot Configuration:
-// [Name]               [Type]        [Port(s)]
-// Controller1          controller                    
-// Intake               motor         15              
-// PistonL              led           A               
-// leftTop              motor         7               
-// leftBot              motor         12              
-// rightTop             motor         10              
-// rightBot             motor         18              
-// PistonR              led           B               
-// catapultRight        motor         9               
-// Roller               motor         8               
-// ---- END VEXCODE CONFIGURED DEVICES ----
-// ---- START VEXCODE CONFIGURED DEVICES ----
-// Robot Configuration:
-// [Name]               [Type]        [Port(s)]
-// Controller1          controller                    
-// Intake               motor         15              
-// PistonL              led           A               
-// leftTop              motor         7               
-// leftBot              motor         12              
-// rightTop             motor         10              
-// rightBot             motor         18              
-// PistonR              led           B               
-// catapultRight        motor         9               
-// Roller               motor         8               
+// Indexer              motor         14              
 // ---- END VEXCODE CONFIGURED DEVICES ----
 #include "vex.h"
 #include <string>
@@ -83,6 +28,8 @@ extern motor catapult;
 extern motor Intake;
 extern motor Roller;
 
+extern motor Indexer;
+
 competition Competition = competition();
 
 void preAuton()
@@ -92,7 +39,7 @@ void preAuton()
 
 void autonomous()
 {
-  Roller.spinFor(reverse,50,degrees);
+  Roller.spinFor(reverse,250,degrees);
 }
 
 void setMotors()
@@ -104,9 +51,8 @@ void setMotors()
   leftBot.setStopping(brake);
   rightTop.setStopping(brake);
   rightBot.setStopping(brake);
+  Indexer.setStopping(brake);
   Roller.setStopping(hold);
-
-  catapult.setStopping(hold);
 }
 
 void move()
@@ -133,14 +79,21 @@ void move()
   }
 }
 
-void catapultOn()
-{
-  catapult.spin(reverse, 40, percent);
+void indexerOn() {
+  Indexer.spinFor(forward, 0.3, seconds, 40, velocityUnits::pct);
 }
 
-void catapultOff()
+void indexerOff() {
+  Indexer.spinFor(reverse, 0.3, seconds, 40, velocityUnits::pct);
+}
+
+void flywheelOn() {
+  flywheel.spin(forward, 90, percent);
+}
+
+void flywheelOff()
 {
-  catapult.stop();
+  flywheel.stop();
 }
 
 void intakeStop() 
@@ -206,13 +159,14 @@ void usercontrol(void)
     Controller1.ButtonR2.pressed(push);
     Controller1.ButtonR1.pressed(retract);
 
-    Controller1.ButtonLeft.pressed(rollerOn);
-    Controller1.ButtonRight.pressed(rollerOff);
+    Controller1.ButtonLeft.pressed(flywheelOn);
+    Controller1.ButtonRight.pressed(flywheelOff);
 
-    Controller1.ButtonL2.pressed(catapultOff);
-    Controller1.ButtonL1.pressed(catapultOn);
+    Controller1.ButtonL2.pressed(indexerOn);
+    Controller1.ButtonL1.pressed(indexerOff);
 
     Controller1.ButtonUp.pressed(autonomous);
+    Controller1.ButtonDown.pressed(rollerOff);
 
     wait(15, msec);
     pneumatic();

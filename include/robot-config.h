@@ -11,8 +11,9 @@ extern motor leftBot;
 extern motor rightTop;
 extern motor rightBot;
 extern led PistonR;
-extern motor catapult;
+extern motor flywheel;
 extern motor Roller;
+extern motor Indexer;
 
 /**
  * Used to initialize code/tasks/devices added using tools in VEXcode Pro.
